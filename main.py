@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 dff= pd.read_csv("table.csv")
 dff.set_index("Players",inplace=True)
-st.title("Badminton Boys:badminton_racquet_and_shuttlecock::badminton_racquet_and_shuttlecock::badminton_racquet_and_shuttlecock:")
+st.title("Badminton Boys:badminton_racquet_and_shuttlecock::badminton_racquet_and_shuttlecock:")
 st.divider()
 st.subheader("Table")
 st.write(dff)
@@ -61,8 +61,8 @@ if st.button("Update",type="primary"):
         dff.loc[p1,"Lost"]+=1
         dff.loc[p1,"Ratings"]-=(32*E1)
         dff.loc[p2,"Ratings"]+=(32*E1)
-    dff.loc[p1,"Played"]-=1
-    dff.loc[p2,"Played"]-=1
+    dff.loc[p1,"Played"]+=1
+    dff.loc[p2,"Played"]+=1
     dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
     if pswd==1000:
         dff.to_csv("table.csv",index=True)
