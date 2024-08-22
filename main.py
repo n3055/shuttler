@@ -45,6 +45,7 @@ s1 = p[0].number_input(p1+"'s score",min_value=0,max_value=30,key=1)
 s2 = p[1].number_input(p2+"'s score",min_value=0,max_value=30,key=2)
 pswd = st.number_input("Enter 4 digit pin",min_value=0,max_value=9999)
 if st.button("Update",type="primary"):
+    st.snow()
     E1 = 1/(1+(pow(10,(float(dff.loc[p2,"Ratings"])-float(dff.loc[p1,"Ratings"]))/400)))
     round(E1,2)
     E2 = 1-E1
