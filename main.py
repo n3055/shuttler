@@ -37,10 +37,11 @@ st.subheader("Ratings")
 st.bar_chart(dff,y="Ratings",color=['#f58b27']) 
 st.subheader("Update Values")
 ## update table
-p1 = st.text_input("Enter player1 name")
-p2 = st.text_input("Enter player2 name")
-s1 = st.number_input("Player1's score,",min_value=0,max_value=30)
-s2 = st.number_input("Player2's score",min_value=0,max_value=30)
+p = st.columns(2)
+p1 = p[0].text_input("Enter player1 name")
+p2 = p[1].text_input("Enter player2 name")
+s1 = p[0].number_input(p1+"'s score",min_value=0,max_value=30)
+s2 = p[1].number_input(p2+"'s score",min_value=0,max_value=30)
 pswd = st.number_input("Enter 4 digit pin",min_value=0,max_value=9999)
 if st.button("Update",type="primary"):
     E1 = 1/(1+(pow(10,(float(dff.loc[p2,"Ratings"])-float(dff.loc[p1,"Ratings"]))/400)))
@@ -64,5 +65,5 @@ if st.button("Update",type="primary"):
     dff.loc[p1,"Played"]+=1
     dff.loc[p2,"Played"]+=1
     dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
-    if pswd==1000:
+    if pswd==1111:
         dff.to_csv("table.csv",index=True)
