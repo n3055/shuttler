@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 dff= pd.read_csv("table.csv")
 dff.set_index("Players",inplace=True)
+dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
 st.title("Badminton Boys:badminton_racquet_and_shuttlecock::badminton_racquet_and_shuttlecock:")
 st.divider()
 st.subheader("Table")
@@ -40,8 +41,8 @@ st.subheader("Update Values")
 p = st.columns(2)
 p1 = p[0].text_input("Enter player1 name")
 p2 = p[1].text_input("Enter player2 name")
-s1 = p[0].number_input(p1+"'s score",min_value=0,max_value=30)
-s2 = p[1].number_input(p2+"'s score",min_value=0,max_value=30)
+s1 = p[0].number_input(p1+"'s score",min_value=0,max_value=30,key=1)
+s2 = p[1].number_input(p2+"'s score",min_value=0,max_value=30,key=2)
 pswd = st.number_input("Enter 4 digit pin",min_value=0,max_value=9999)
 if st.button("Update",type="primary"):
     E1 = 1/(1+(pow(10,(float(dff.loc[p2,"Ratings"])-float(dff.loc[p1,"Ratings"]))/400)))
