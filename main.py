@@ -4,7 +4,7 @@ from datetime import datetime
 dff= pd.read_csv("table.csv")
 dff.set_index("Players",inplace=True)
 dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
-st.title("Badminton Boys:badminton_racquet_and_shuttlecock::badminton_racquet_and_shuttlecock:")
+st.title("Shuttler:badminton_racquet_and_shuttlecock::badminton_racquet_and_shuttlecock:")
 st.divider()
 st.subheader("Table :sports_medal:")
 st.write(dff)
