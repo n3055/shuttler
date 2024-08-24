@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+from datetime import datetime
 dff= pd.read_csv("table.csv")
 dff.set_index("Players",inplace=True)
 dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
@@ -7,33 +8,16 @@ st.title("Badminton Boys:badminton_racquet_and_shuttlecock::badminton_racquet_an
 st.divider()
 st.subheader("Table")
 st.write(dff)
+##recent matches
 st.subheader("Recent Matches")
-one,two,three,four,five,six = st.columns(6)
-one = one.container(border=True)
-two = two.container(border=True)
-three = three.container(border=True)
-four = four.container(border=True)
-five = five.container(border=True)
-six = six.container(border=True)
-#one.title("Match-1")
-one.caption("19/08/2024")
-two.caption("19/08/2024")
-three.caption("19/08/2024")
-four.caption("19/08/2024")
-five.caption("19/08/2024")
-six.caption("19/08/2024")
-one.write("Harsha-19")
-one.write("Rishi-21")
-two.write("Deepak-21")
-two.write("Sameer-17")
-three.write("Deepak-21")
-three.write("Rishi-5")
-four.write("Sameer-21")
-four.write("Harsha-16")
-five.write("Deepak-22")
-five.write("Sameer-20")
-six.write("Harsha-17")
-six.write("Rishi-21")
+mat = st.columns(6)
+with open("recent.txt","r") as f1:
+    for i in range(6):
+        mat[i] = mat[i].container(border=True)
+        mat[i].caption(f1.readline())
+        for j in range(2):
+            mat[i].write(f1.readline())
+##Ratings chart
 st.subheader("Ratings")
 st.bar_chart(dff,y="Ratings",color=['#f58b27']) 
 st.subheader("Update Values")
@@ -69,3 +53,16 @@ if st.button("Update",type="primary"):
     dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
     if pswd==1111:
         dff.to_csv("table.csv",index=True)
+        with open("recent.txt","r") as f1:
+            lines = f1.read()
+            ptr = 4
+            with open("recent.txt","w") as f2:
+                now = datetime.today()
+                f2.write(now.strftime("%d")+"/"+now.strftime("%m")+"/"+now.strftime("%Y")+now.strftime(" %H:%M")+"\n")
+                f2.write(str(p1)+"-"+str(s1)+"\n")
+                f2.write(str(p2)+"-"+str(s2)+"\n")
+                for line in lines:
+                    if ptr<=18:
+                        f2.write(line)
+                    else:
+                        break
