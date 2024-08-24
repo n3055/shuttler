@@ -23,46 +23,73 @@ st.bar_chart(dff,y="Ratings",color=['#f58b27'])
 st.subheader("Update Values")
 ## update table
 p = st.columns(2)
-p1 = p[0].selectbox("Select player1 name",("Harsha","Rishi","Deepak","Sameer"))
-p2 = p[1].selectbox("Select player2 name",("Rishi","Sameer","Harsha","Deepak"))
+PLY = []
+with open("PLAYERS.txt","r") as f1:
+    lines = f1.readlines()
+    for line in lines:
+        PLY.append(line.strip())
+PLAYERS = tuple(PLY)
+p1 = p[0].selectbox("Select player1 name",PLAYERS)
+p2 = p[1].selectbox("Select player2 name",PLAYERS)
 s1 = p[0].number_input(p1+"'s score",min_value=0,max_value=30,key=1)
 s2 = p[1].number_input(p2+"'s score",min_value=0,max_value=30,key=2)
 pswd = st.number_input("Enter 4 digit pin",min_value=0,max_value=9999)
 if st.button("Update",type="primary"):
-    st.snow()
-    E1 = 1/(1+(pow(10,(float(dff.loc[p2,"Ratings"])-float(dff.loc[p1,"Ratings"]))/400)))
-    round(E1,2)
-    E2 = 1-E1
-    diff = abs(s1-s2)
-    if s1>s2:
-        dff.loc[p1,"APD"]= (dff.loc[p1,"Played"]*dff.loc[p1,"APD"]+diff)/(dff.loc[p1,"Played"]+1)
-        dff.loc[p2,"APD"]= (dff.loc[p2,"Played"]*dff.loc[p2,"APD"]-diff)/(dff.loc[p2,"Played"]+1)
-        dff.loc[p1,"Won"]+=1
-        dff.loc[p2,"Lost"]+=1
-        dff.loc[p1,"Ratings"]+=(32*E2)
-        dff.loc[p2,"Ratings"]-=32*E2
-    elif s2>s1:
-        dff.loc[p2,"APD"]= (dff.loc[p2,"Played"]*dff.loc[p2,"APD"]+diff)/(dff.loc[p2,"Played"]+1)
-        dff.loc[p1,"APD"]= (dff.loc[p1,"Played"]*dff.loc[p1,"APD"]-diff)/(dff.loc[p1,"Played"]+1)
-        dff.loc[p2,"Won"]+=1
-        dff.loc[p1,"Lost"]+=1
-        dff.loc[p1,"Ratings"]-=(32*E1)
-        dff.loc[p2,"Ratings"]+=(32*E1)
-    dff.loc[p1,"Played"]+=1
-    dff.loc[p2,"Played"]+=1
-    dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
-    if pswd==1111:
-        dff.to_csv("table.csv",index=True)
-        with open("recent.txt","r") as f1:
-            lines = f1.read()
-            ptr = 4
-            with open("recent.txt","w") as f2:
-                now = datetime.today()
-                f2.write(now.strftime("%d")+"/"+now.strftime("%m")+"/"+now.strftime("%Y")+now.strftime(" %H:%M")+"\n")
-                f2.write(str(p1)+"-"+str(s1)+"\n")
-                f2.write(str(p2)+"-"+str(s2)+"\n")
-                for line in lines:
-                    if ptr<=18:
-                        f2.write(line)
-                    else:
-                        break
+    if p1==p2:
+        st.info("Playing against the wall is not counted XD")
+    else:    
+        st.snow()
+        E1 = 1/(1+(pow(10,(float(dff.loc[p2,"Ratings"])-float(dff.loc[p1,"Ratings"]))/400)))
+        round(E1,2)
+        E2 = 1-E1
+        diff = abs(s1-s2)
+        if s1>s2:
+            dff.loc[p1,"APD"]= (dff.loc[p1,"Played"]*dff.loc[p1,"APD"]+diff)/(dff.loc[p1,"Played"]+1)
+            dff.loc[p2,"APD"]= (dff.loc[p2,"Played"]*dff.loc[p2,"APD"]-diff)/(dff.loc[p2,"Played"]+1)
+            dff.loc[p1,"Won"]+=1
+            dff.loc[p2,"Lost"]+=1
+            dff.loc[p1,"Ratings"]+=(32*E2)
+            dff.loc[p2,"Ratings"]-=32*E2
+        elif s2>s1:
+            dff.loc[p2,"APD"]= (dff.loc[p2,"Played"]*dff.loc[p2,"APD"]+diff)/(dff.loc[p2,"Played"]+1)
+            dff.loc[p1,"APD"]= (dff.loc[p1,"Played"]*dff.loc[p1,"APD"]-diff)/(dff.loc[p1,"Played"]+1)
+            dff.loc[p2,"Won"]+=1
+            dff.loc[p1,"Lost"]+=1
+            dff.loc[p1,"Ratings"]-=(32*E1)
+            dff.loc[p2,"Ratings"]+=(32*E1)
+        dff.loc[p1,"Played"]+=1
+        dff.loc[p2,"Played"]+=1
+        dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
+        if pswd==1111:
+            dff.to_csv("table.csv",index=True)
+            with open("recent.txt","r") as f1:
+                lines = f1.read()
+                ptr = 4
+                with open("recent.txt","w") as f2:
+                    now = datetime.today()
+                    f2.write(now.strftime("%d")+"/"+now.strftime("%m")+"/"+now.strftime("%Y")+now.strftime(" %H:%M")+"\n")
+                    f2.write(str(p1)+"-"+str(s1)+"\n")
+                    f2.write(str(p2)+"-"+str(s2)+"\n")
+                    for line in lines:
+                        if ptr<=18:
+                            f2.write(line)
+                        else:
+                            break
+st.subheader("Add New Player")
+name = st.text_input("Enter player name")
+ssc = st.number_input("Enter security pin",min_value=0,max_value=10000)
+if st.button("Add",type="secondary"):
+    if ssc==1111:
+        dat = {
+            'Players': [name],
+            'Played':[0],
+            'Won':[0],
+            'Lost':[0],
+            'APD':[0],
+            'Ratings':[1000]
+        }
+        np =  pd.DataFrame(dat)
+        np.to_csv("table.csv",mode='a',index=False,header=False)
+        with open("PLAYERS.txt","a") as f1:
+            f1.write("\n"+name)
+        st.info("New player added Successfully")
