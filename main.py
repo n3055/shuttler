@@ -6,10 +6,10 @@ dff.set_index("Players",inplace=True)
 dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
 st.title("Badminton Boys:badminton_racquet_and_shuttlecock::badminton_racquet_and_shuttlecock:")
 st.divider()
-st.subheader("Table")
+st.subheader("Table :sports_medal:")
 st.write(dff)
 ##recent matches
-st.subheader("Recent Matches")
+st.subheader("Recent Matches :fire:")
 mat = st.columns(6)
 with open("recent.txt","r") as f1:
     for i in range(6):
@@ -18,8 +18,8 @@ with open("recent.txt","r") as f1:
         for j in range(2):
             mat[i].write(f1.readline())
 ##Ratings chart
-st.subheader("Ratings")
-st.bar_chart(dff,y="Ratings",color=['#f58b27']) 
+st.subheader("Stats")
+st.bar_chart(dff)
 st.subheader("Update Values")
 ## update table
 p = st.columns(2)
@@ -75,7 +75,7 @@ if st.button("Update",type="primary"):
                             f2.write(line)
                         else:
                             break
-st.subheader("Add New Player")
+st.subheader("New Player")
 name = st.text_input("Enter player name")
 ssc = st.number_input("Enter security pin",min_value=0,max_value=10000)
 if st.button("Add",type="secondary"):
