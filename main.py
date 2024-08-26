@@ -101,5 +101,5 @@ if st.button("Add",type="secondary"):
         with open("PLAYERS.txt","a") as f1:
             f1.write("\n"+name)
         st.info("New player added Successfully")
-st.title("Head to Head")
+st.title("Head to Head :vs:")
 st.write(hq)
