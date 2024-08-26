@@ -4,7 +4,9 @@ from datetime import datetime
 dff= pd.read_csv("table.csv")
 dff.set_index("Players",inplace=True)
 dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
-st.title("Shuttler:badminton_racquet_and_shuttlecock::badminton_racquet_and_shuttlecock:")
+hq = pd.read_csv("head.csv")
+hq.set_index("Players",inplace=True)
+st.title("Badminton Boys:badminton_racquet_and_shuttlecock::badminton_racquet_and_shuttlecock:")
 st.divider()
 st.subheader("Table :sports_medal:")
 st.write(dff)
@@ -18,8 +20,9 @@ with open("recent.txt","r") as f1:
         for j in range(2):
             mat[i].write(f1.readline())
 ##Ratings chart
-st.subheader("Stats")
-st.bar_chart(dff)
+st.subheader("Ratings")
+st.bar_chart(dff) 
+#st.bar_chart(dff,y=dff["Won"]/dff["Played"],color=['#0390fc'])
 st.subheader("Update Values")
 ## update table
 p = st.columns(2)
@@ -50,6 +53,8 @@ if st.button("Update",type="primary"):
             dff.loc[p2,"Lost"]+=1
             dff.loc[p1,"Ratings"]+=(32*E2)
             dff.loc[p2,"Ratings"]-=32*E2
+            hq.loc[p1,p2]+=1
+            hq.loc[p1,"Won"]+=1
         elif s2>s1:
             dff.loc[p2,"APD"]= (dff.loc[p2,"Played"]*dff.loc[p2,"APD"]+diff)/(dff.loc[p2,"Played"]+1)
             dff.loc[p1,"APD"]= (dff.loc[p1,"Played"]*dff.loc[p1,"APD"]-diff)/(dff.loc[p1,"Played"]+1)
@@ -57,10 +62,13 @@ if st.button("Update",type="primary"):
             dff.loc[p1,"Lost"]+=1
             dff.loc[p1,"Ratings"]-=(32*E1)
             dff.loc[p2,"Ratings"]+=(32*E1)
+            hq.loc[p2,p1]+=1
+            hq.loc[p2,"Won"]+=1
         dff.loc[p1,"Played"]+=1
         dff.loc[p2,"Played"]+=1
         dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
         if pswd==1111:
+            hq.to_csv("head.csv",index=True)
             dff.to_csv("table.csv",index=True)
             with open("recent.txt","r") as f1:
                 lines = f1.read()
@@ -93,3 +101,5 @@ if st.button("Add",type="secondary"):
         with open("PLAYERS.txt","a") as f1:
             f1.write("\n"+name)
         st.info("New player added Successfully")
+st.title("Head to Head")
+st.write(hq)
