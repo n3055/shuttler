@@ -67,7 +67,7 @@ if st.button("Update",type="primary"):
         dff.loc[p1,"Played"]+=1
         dff.loc[p2,"Played"]+=1
         dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
-        if pswd==1111:
+        if pswd==st.secrets["pin"]:
             hq.to_csv("head.csv",index=True)
             dff.to_csv("table.csv",index=True)
             with open("recent.txt","r") as f1:
@@ -87,7 +87,7 @@ st.subheader("New Player")
 name = st.text_input("Enter player name")
 ssc = st.number_input("Enter security pin",min_value=0,max_value=10000)
 if st.button("Add",type="secondary"):
-    if ssc==1111:
+    if ssc==st.secrets["pin"]:
         dat = {
             'Players': [name],
             'Played':[0],
