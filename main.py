@@ -37,7 +37,7 @@ p2 = p[1].selectbox("Select player2 name",PLAYERS)
 s1 = p[0].number_input(p1+"'s score",min_value=0,max_value=30,key=1)
 s2 = p[1].number_input(p2+"'s score",min_value=0,max_value=30,key=2)
 pswd = st.number_input("Enter 4 digit pin",min_value=0,max_value=9999)
-if st.button("Update",type="primary"):
+if st.button("Update",type="primary") and pswd=st.secrets["pin"]:
     if p1==p2:
         st.info("Playing against the wall is not counted XD")
     else:    
@@ -67,39 +67,37 @@ if st.button("Update",type="primary"):
         dff.loc[p1,"Played"]+=1
         dff.loc[p2,"Played"]+=1
         dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
-        if pswd==st.secrets["pin"]:
-            hq.to_csv("head.csv",index=True)
-            dff.to_csv("table.csv",index=True)
-            with open("recent.txt","r") as f1:
-                lines = f1.read()
-                ptr = 4
-                with open("recent.txt","w") as f2:
-                    now = datetime.today()
-                    f2.write(now.strftime("%d")+"/"+now.strftime("%m")+"/"+now.strftime("%Y")+now.strftime(" %H:%M")+"\n")
-                    f2.write(str(p1)+"-"+str(s1)+"\n")
-                    f2.write(str(p2)+"-"+str(s2)+"\n")
-                    for line in lines:
-                        if ptr<=18:
-                            f2.write(line)
-                        else:
-                            break
+        hq.to_csv("head.csv",index=True)
+        dff.to_csv("table.csv",index=True)
+        with open("recent.txt","r") as f1:
+            lines = f1.read()
+            ptr = 4
+            with open("recent.txt","w") as f2:
+                now = datetime.today()
+                f2.write(now.strftime("%d")+"/"+now.strftime("%m")+"/"+now.strftime("%Y")+now.strftime(" %H:%M")+"\n")
+                f2.write(str(p1)+"-"+str(s1)+"\n")
+                f2.write(str(p2)+"-"+str(s2)+"\n")
+                for line in lines:
+                    if ptr<=18:
+                        f2.write(line)
+                    else:
+                        break
 st.subheader("New Player")
 name = st.text_input("Enter player name")
 ssc = st.number_input("Enter security pin",min_value=0,max_value=10000)
-if st.button("Add",type="secondary"):
-    if ssc==st.secrets["pin"]:
-        dat = {
-            'Players': [name],
-            'Played':[0],
-            'Won':[0],
-            'Lost':[0],
-            'APD':[0],
-            'Ratings':[1000]
-        }
-        np =  pd.DataFrame(dat)
-        np.to_csv("table.csv",mode='a',index=False,header=False)
-        with open("PLAYERS.txt","a") as f1:
-            f1.write("\n"+name)
-        st.info("New player added Successfully")
+if st.button("Add",type="secondary") and ssc=st.secrets["pin"]:
+    dat = {
+        'Players': [name],
+        'Played':[0],
+        'Won':[0],
+        'Lost':[0],
+        'APD':[0],
+        'Ratings':[1000]
+    }
+    np =  pd.DataFrame(dat)
+    np.to_csv("table.csv",mode='a',index=False,header=False)
+    with open("PLAYERS.txt","a") as f1:
+        f1.write("\n"+name)
+    st.info("New player added Successfully")
 st.title("Head to Head :vs:")
 st.write(hq)
