@@ -6,6 +6,8 @@ dff.set_index("Players",inplace=True)
 dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
 hq = pd.read_csv("head.csv")
 hq.set_index("Players",inplace=True)
+with st.spinner("something great is loading.."):
+    time.sleep(5)
 st.image("logo.gif")
 #st.title("Badminton Boys:badminton_racquet_and_shuttlecock:")
 st.divider()
