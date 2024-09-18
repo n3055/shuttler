@@ -7,8 +7,11 @@ dff.set_index("Players",inplace=True)
 dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
 hq = pd.read_csv("head.csv")
 hq.set_index("Players",inplace=True)
+img = "logo.gif"
+st.image(img)
 with st.spinner("logo.gif"):
     time.sleep(5)
+img = ""
 #st.title("Badminton Boys:badminton_racquet_and_shuttlecock:")
 st.divider()
 st.subheader("Table :sports_medal:")
