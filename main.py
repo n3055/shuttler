@@ -85,7 +85,7 @@ if st.button("Update",type="primary"):
                             break
             st.rerun()
     else:
-        st.info("Who are you??")
+        st.info(st.image("wait-a-minute-who-are-you.gif"))
 st.subheader("New Player")
 name = st.text_input("Enter player name")
 ssc = st.number_input("Enter security pin",min_value=0,max_value=10000)
