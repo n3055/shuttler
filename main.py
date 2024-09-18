@@ -41,6 +41,7 @@ if st.button("Update",type="primary") and pswd==st.secrets.pin:
     if p1==p2:
         st.info("Playing against the wall is not counted XD")
     else:    
+        st.info("Updated Successfully")
         E1 = 1/(1+(pow(10,(float(dff.loc[p2,"Ratings"])-float(dff.loc[p1,"Ratings"]))/400)))
         round(E1,2)
         E2 = 1-E1
@@ -81,7 +82,6 @@ if st.button("Update",type="primary") and pswd==st.secrets.pin:
                         f2.write(line)
                     else:
                         break
-        st.info("Updated Successfully")
         st.rerun()
 st.subheader("New Player")
 name = st.text_input("Enter player name")
