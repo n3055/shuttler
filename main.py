@@ -11,7 +11,7 @@ img = "logo.gif"
 st.image(img)
 with st.spinner("logo.gif"):
     time.sleep(5)
-img = ""
+del img
 #st.title("Badminton Boys:badminton_racquet_and_shuttlecock:")
 st.divider()
 st.subheader("Table :sports_medal:")
