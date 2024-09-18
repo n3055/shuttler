@@ -37,7 +37,7 @@ p2 = p[1].selectbox("Select player2 name",PLAYERS)
 s1 = p[0].number_input(p1+"'s score",min_value=0,max_value=30,key=1)
 s2 = p[1].number_input(p2+"'s score",min_value=0,max_value=30,key=2)
 pswd = st.number_input("Enter 4 digit pin",min_value=0,max_value=9999)
-if st.button("Update",type="primary") and pswd==st.secrets["pin"]:
+if st.button("Update",type="primary") and pswd==1111:
     if p1==p2:
         st.info("Playing against the wall is not counted XD")
     else:    
