@@ -9,7 +9,7 @@ hq = pd.read_csv("head.csv")
 hq.set_index("Players",inplace=True)
 img = "logo.gif"
 st.image(img)
-st.write("Badminton Boys:badminton_racquet_and_shuttlecock:")
+st.subheader("Badminton Boys:badminton_racquet_and_shuttlecock:")
 #st.title("Badminton Boys:badminton_racquet_and_shuttlecock:")
 st.divider()
 st.subheader("Table :sports_medal:")
