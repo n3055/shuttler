@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
+import time
 dff= pd.read_csv("table.csv")
 dff.set_index("Players",inplace=True)
 dff.sort_values(["Ratings","Won","APD"],inplace=True,ascending = False)
