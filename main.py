@@ -82,6 +82,7 @@ if st.button("Update",type="primary") and pswd==st.secrets.pin:
                         f2.write(line)
                     else:
                         break
+        st.rerun()
 st.subheader("New Player")
 name = st.text_input("Enter player name")
 ssc = st.number_input("Enter security pin",min_value=0,max_value=10000)
